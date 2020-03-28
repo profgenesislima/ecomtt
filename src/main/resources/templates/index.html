@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>(IFPB-TT) - Loja</h1>
+<h3>Produtos</h3>
+	<table cellpadding="2" cellspacing="2" border="1">
+		<tr>
+			<th>Id</th>
+			<th>Nome</th>
+			<th>Produto</th>
+			<th>Preço</th>
+			<th>Adicionar no Carrinho</th>
+		</tr>
+		<tr th:each="product: ${products}">
+    <td th:text="${product.id}" />
+    <td th:text="${product.name}" />
+    <td><img th:src="@{/images/}+${product.image}+.jpg" width="50"></td>
+    <td th:text="${product.price}"/>
+    <td align="center">
+					<a th:href="@{/cart/}+${product.id}">Comprar</a>
+				</td>
+    
+ </tr>
+</table>
+</body>
+</html>
