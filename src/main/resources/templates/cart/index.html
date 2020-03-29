@@ -2,46 +2,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Ecommerce - IFPB/TT</title>
 </head>
 <body>
 
 <h3>Cart Page</h3>
-	<table cellpadding="2" cellspacing="2" border="1">
+	<table cellpadding="2" cellspacing="2" border="1" th:with="totalValue=0">
 		<tr>
-			<th>Option</th>
 			<th>Id</th>
-			<th>Name</th>
-			<th>Photo</th>
-			<th>Price</th>
-			<th>Quantity</th>
+			<th>Nome</th>
+			<th>Produto</th>
+			<th>Preço</th>
+			<th>Quantidade</th>
 			<th>Sub Total</th>
+			<th>Ação</th>			
 		</tr>
-		<c:set var="total" value="0"></c:set>
-		<c:forEach var="item" items="${sessionScope.cart }">
-			<c:set var="total"
-				value="${total + item.product.price * item.quantity }"></c:set>
-			<tr>
-				<td align="center"><a
-					href="${pageContext.request.contextPath }/cart/remove/${item.product.id }"
-					onclick="return confirm('Are you sure?')">Remove</a></td>
-				<td>${item.product.id }</td>
-				<td>${item.product.name }</td>
-				<td><img src="${pageContext.request.contextPath }/resources/http://learningprogramming.net/wp-content/uploads/java/spring_mvc/${item.product.photo }"
-					width="50"></td>
-				<td>${item.product.price }</td>
-				<td>${item.quantity }</td>
-				<td>${item.product.price * item.quantity }</td>
-			</tr>
-		</c:forEach>
+		
+		
+	<tr th:each="item: ${session.cart}">
+     <p th:with="totalValue = ${ item.product.price * item.quantity }"> </p>
+    <td th:text="${item.product.id}" />
+    <td th:text="${item.product.name}" />
+    <td><img th:src="@{/images/}+${item.product.image}+.jpg" width="50"></td>
+    <td th:text="${item.product.price}"/>
+    <td th:text="${item.quantity}"/>
+    <td th:text="${ item.product.price * item.quantity }"/>
+    <td align="center">
+					<a th:href="@{/cart/}+${item.product.id}">Comprar</a>
+				</td>
+    
+ </tr>
+
 		<tr>
-			<td colspan="6" align="right">Sum</td>
-			<td>${total }</td>
+			<td colspan="6" align="right">Total</td>
+			<td th:text="${totalValue}"></td>
 		</tr>
 	</table>
 	<br>
-	<a href="${pageContext.request.contextPath }/product">Continue
-		Shopping</a>
+	<a href="/product">Continuar Comprando</a>
 
 
 </body>
