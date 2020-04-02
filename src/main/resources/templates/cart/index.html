@@ -7,7 +7,8 @@
 <body>
 
 <h3>Cart Page</h3>
-	<table cellpadding="2" cellspacing="2" border="1" th:with="totalValue=0">
+<div th:with="totalValue=0">
+	<table cellpadding="2" cellspacing="2" border="1" >
 		<tr>
 			<th>Id</th>
 			<th>Nome</th>
@@ -21,6 +22,7 @@
 		
 	<tr th:each="item: ${session.cart}">
      <p th:with="totalValue = ${ item.product.price * item.quantity }"> </p>
+    <p th:text="${totalValue}"></p>
     <td th:text="${item.product.id}" />
     <td th:text="${item.product.name}" />
     <td><img th:src="@{/images/}+${item.product.image}+.jpg" width="50"></td>
@@ -38,8 +40,9 @@
 			<td th:text="${totalValue}"></td>
 		</tr>
 	</table>
+	</div>
 	<br>
-	<a href="/product">Continuar Comprando</a>
+	<a href="/">Continuar Comprando</a>
 
 
 </body>
