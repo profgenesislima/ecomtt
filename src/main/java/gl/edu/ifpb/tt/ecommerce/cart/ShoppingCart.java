@@ -1,5 +1,6 @@
 package gl.edu.ifpb.tt.ecommerce.cart;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +17,20 @@ import gl.edu.ifpb.tt.ecommerce.service.ProductService;
 
 //@Controller
 //@RequestMapping("cart")
-public class ShoppingCart {
+public class ShoppingCart  implements Serializable{
 
-	private List<Item> cart = new ArrayList<Item>();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private List<Item> items = new ArrayList<Item>();
 	
 	@Autowired
 	ProductService productService;
 	
 	public void addItem(Item item) {		
-		this.cart.add(item);
+		this.items.add(item);
 	}
 	
 	@RequestMapping(value="remove/{id}",method = RequestMethod.GET)
@@ -38,7 +44,7 @@ public class ShoppingCart {
 	}
 
 	public void updateItem(Item item) throws InvalidProductIdException {
-		Item itm = this.cart.stream()
+		Item itm = this.items.stream()
 				.filter(i -> i.equals(item)).findAny().get();	
 		if(itm!=null) {			
 			itm.setProduct(item.getProduct());
@@ -47,12 +53,12 @@ public class ShoppingCart {
 		}
 	}
 	
-	public List<Item> getCart(){
-		return this.cart;
+	public List<Item> getItems(){
+		return this.items;
 	}
 
 	public Item getItemByProduct(Product product) {
-		return this.cart.stream().
+		return this.items.stream().
 				filter(i->i.getProduct() == product).findAny().get();
 	}
 	
@@ -60,18 +66,18 @@ public class ShoppingCart {
 	public String buyItem(@PathVariable("id") String id, HttpSession session) {
 		if(session.getAttribute("cart") == null) {
 			List<Item> shoppingCart = (List<Item>) session.getAttribute("cart");
-			cart.add(new Item(productService.getById(Long.parseLong(id)), 1));
+			items.add(new Item(productService.getById(Long.parseLong(id)), 1));
 			session.setAttribute("cart", shoppingCart);
 		}else {
 			List<Item> shoppingCart= (List<Item>) session.getAttribute("cart");
-			int index = this.alreadyExists(id, cart);
+			int index = this.alreadyExists(id, items);
 			if (index == -1) {
-				cart.add(new Item(productService.getById(Long.parseLong(id)), 1));
+				items.add(new Item(productService.getById(Long.parseLong(id)), 1));
 			} else {
-				int quantity = cart.get(index).getQuantity() + 1;
-				cart.get(index).setQuantity(quantity);
+				int quantity = items.get(index).getQuantity() + 1;
+				items.get(index).setQuantity(quantity);
 			}
-			session.setAttribute("cart", cart);
+			session.setAttribute("cart", items);
 
 		}
 		return "redirect:/cart/index";

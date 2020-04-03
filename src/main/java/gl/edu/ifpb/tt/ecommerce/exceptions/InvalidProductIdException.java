@@ -9,6 +9,6 @@ public class InvalidProductIdException extends Exception {
 	@Override
 	public String getMessage() {
 		
-		return "Um produto deve ter um Id maior que zero";
+		return "[EX_PROD_001] - Um produto deve ter um Id maior que zero.";
 	}
 }

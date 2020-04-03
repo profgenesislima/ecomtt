@@ -1,12 +1,14 @@
 package gl.edu.ifpb.tt.ecommerce.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import gl.edu.ifpb.tt.ecommerce.exceptions.InvalidProductIdException;
@@ -15,7 +17,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="PRODUCT")
+@Table(name="TB_PRODUCT")
 public class Product implements Serializable {
 	
 	/**
@@ -32,6 +34,8 @@ public class Product implements Serializable {
 	private String description;	
 	private double price;
 	private String image;
+	@ManyToMany(mappedBy = "products")
+	private List<Order> orders;
 	
 	public Long getId() {
 		return id;

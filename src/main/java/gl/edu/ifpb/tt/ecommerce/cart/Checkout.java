@@ -1,8 +1,16 @@
 package gl.edu.ifpb.tt.ecommerce.cart;
 
-public class Checkout {
+import org.springframework.boot.context.properties.ConstructorBinding;
 
-	private Payment payment;
-	private ShoppingCart shoppintCart;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+@Data
+@RequiredArgsConstructor
+public final class Checkout {
+
+	private final Payment payment;
+	private final ShoppingCart shoppintCart;
+	
 	//private Client client;
 }

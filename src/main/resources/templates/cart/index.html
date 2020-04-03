@@ -4,10 +4,12 @@
 <meta charset="ISO-8859-1">
 <title>Ecommerce - IFPB/TT</title>
 </head>
-<body>
+<body >
 
 <h3>Cart Page</h3>
-<div th:with="totalValue=0">
+<form id="cartForm"  method="post">
+
+	<div th:with="totalValue=0">
 	<table cellpadding="2" cellspacing="2" border="1" >
 		<tr>
 			<th>Id</th>
@@ -21,14 +23,19 @@
 		
 		
 	<tr th:each="item: ${session.cart}">
-     <p th:with="totalValue = ${ item.product.price * item.quantity }"> </p>
-    <p th:text="${totalValue}"></p>
+     <p th:with="totalValue = ${ item.product.price} * ${item.quantity}"> </p>
+     
     <td th:text="${item.product.id}" />
+    <td> <input type="hidden" th:field="*{cart.product.id}"></td>    
     <td th:text="${item.product.name}" />
+    
     <td><img th:src="@{/images/}+${item.product.image}+.jpg" width="50"></td>
     <td th:text="${item.product.price}"/>
+    
     <td th:text="${item.quantity}"/>
+    
     <td th:text="${ item.product.price * item.quantity }"/>
+    
     <td align="center">
 					<a th:href="@{/cart/}+${item.product.id}">Comprar</a>
 				</td>
@@ -37,12 +44,16 @@
 
 		<tr>
 			<td colspan="6" align="right">Total</td>
-			<td th:text="${totalValue}"></td>
+			<td th:text="${totalValue}"></td>		  
+			
 		</tr>
+		
 	</table>
 	</div>
+	</form>
 	<br>
 	<a href="/">Continuar Comprando</a>
+	<a href="" onclick=""> Fechar Compra</a>
 
 
 </body>
