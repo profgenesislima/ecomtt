@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-<meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<meta charset="UTF-8">
 <title>Ecommerce - IFPB/TT</title>
 </head>
 <body >
 
 <h3>Cart Page</h3>
-<form id="cartForm"  method="post">
+<!-- <div th:with="shoppingCart = ${session.cart}"> -->
+<form id="cartForm" action="/checkout" method="post">
 
-	<div th:with="totalValue=0">
+	
 	<table cellpadding="2" cellspacing="2" border="1" >
 		<tr>
 			<th>Id</th>
@@ -22,19 +25,23 @@
 		</tr>
 		
 		
-	<tr th:each="item: ${session.cart}">
-     <p th:with="totalValue = ${ item.product.price} * ${item.quantity}"> </p>
+	<tr th:each="item, itemStat: ${session.cart}">
+     <p th:with="totalValue = ${item.product.price} * ${item.quantity}"> </p>
      
     <td th:text="${item.product.id}" />
-    <td> <input type="hidden" th:field="*{cart.product.id}"></td>    
+    <input type="hidden" id="id+${itemStat}" name="id" th:value="${item.product.id}"/>    
     <td th:text="${item.product.name}" />
+<!--         <input type="hidden" id="name" th:name="name" th:value="${item.product.name}">    -->
     
     <td><img th:src="@{/images/}+${item.product.image}+.jpg" width="50"></td>
     <td th:text="${item.product.price}"/>
+<!--      <input type="hidden" id="price" th:name="price" th:value="${item.product.price}">    -->
     
     <td th:text="${item.quantity}"/>
+<!--          <input type="hidden" id="quantity" th:name="quantity" th:value="${item.quantity}"> -->
     
     <td th:text="${ item.product.price * item.quantity }"/>
+<!--     <td> <input type="hidden" id="quantity" th:name="quantity" th:value="${item.product.quantity}"></td>     -->
     
     <td align="center">
 					<a th:href="@{/cart/}+${item.product.id}">Comprar</a>
@@ -49,12 +56,19 @@
 		</tr>
 		
 	</table>
-	</div>
+	
 	</form>
+<!-- 	</div> -->
 	<br>
 	<a href="/">Continuar Comprando</a>
-	<a href="" onclick=""> Fechar Compra</a>
+	<a id="checkout" href="#"> Fechar Compra</a>
 
-
+<script type="text/javascript">
+$( "#checkout" ).click(function() {	
+	  $( "#cartForm" ).submit();
+	  console.log($("#cartForm"));
+	  console.log("SUBMIT");
+	});
+</script>
 </body>
 </html>

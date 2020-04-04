@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class Product implements Serializable {
 	private String description;	
 	private double price;
 	private String image;
-	@ManyToMany(mappedBy = "products")
+	@ManyToMany(mappedBy = "products",fetch = FetchType.EAGER)
 	private List<Order> orders;
 	
 	public Long getId() {

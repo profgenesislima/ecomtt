@@ -7,11 +7,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import gl.edu.ifpb.tt.ecommerce.cart.Item;
+import gl.edu.ifpb.tt.ecommerce.cart.ShoppingCart;
 import gl.edu.ifpb.tt.ecommerce.service.ProductService;
 
 @Controller
@@ -27,8 +29,8 @@ public class CartController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String buy(@PathVariable("id") String id, HttpSession session) {		
-		System.out.println("ID"+id);
+	public String buy(@PathVariable("id") String id,HttpSession session) {		
+//		System.out.println("ID"+id);
 		if (session.getAttribute("cart") == null) {
 			List<Item> cart = new ArrayList<Item>();
 			cart.add(new Item(productService.getById(Long.valueOf(id)),1));
