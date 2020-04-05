@@ -8,6 +8,10 @@ import gl.edu.ifpb.tt.ecommerce.entity.Product;
 @Repository	
 public interface ProductDAO extends CrudRepository<Product, Long>{
 
+	Product findByName(String name);
+
+	
+
 	
 	
 }

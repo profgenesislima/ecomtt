@@ -30,7 +30,6 @@ public class CheckoutController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String checkout(HttpSession session) {
-		System.out.println("SESSION"+session.getAttribute("cart"));
              
 		List<Product> products = new ArrayList<Product>();
 		List<Item> cartItems = (List<Item>) session.getAttribute("cart");
@@ -38,7 +37,7 @@ public class CheckoutController {
 			products.add(p);
 		});
 		
-		orderService.save(new Order(LocalDate.now(),products));
+		orderService.save(new Order(LocalDate.now(),products));	
 		
 		return "redirect:/cart/index";
 		}
